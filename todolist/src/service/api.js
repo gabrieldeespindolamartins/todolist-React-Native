@@ -13,7 +13,6 @@ export default function Api() {
 
   return (
       <ScrollView>
-        <h1>Tarefas</h1>
         {tarefas.map((item) =>
           <View key={item.taskId}> 
             <text>{item.title}</text>

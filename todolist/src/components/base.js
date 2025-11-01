@@ -1,13 +1,14 @@
+import Api from "./src/service/api";
 import { View, Text } from "react-native-web"
 
-const base = () => {
+const Base = () => {
   return (
     <div>
       <View>
-        <Text>separação de components e servições</Text>
+        
       </View>
     </div>
   )
 }
 
-export default base
+export default Base
