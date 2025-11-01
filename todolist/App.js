@@ -1,10 +1,26 @@
-
-import { Text, View } from 'react-native';
+import { useState, useEffect } from 'react';
+import { ScrollView, Text, View } from 'react-native';
 
 export default function App() {
+  const [ tarefas, setTarefas ] = useState([]);
+
+  useEffect(() => {
+    fetch("https://6903b880d0f10a340b257047.mockapi.io/tasks")
+      .then((res) => res.json())
+      .then((data) => setTarefas(data))
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
-    <View>
-      <Text>Comçando o projeto</Text>
-    </View>
+      <ScrollView>
+        <h1>Tarefas</h1>
+        {tarefas.map((item) =>
+          <View key={item.taskId}> 
+            <text>{item.title}</text>
+            <text>{item.description}</text>
+            <text>{item.completed ? "Concluida" : "pendente"}</text>
+          </View>
+        )}
+      </ScrollView>
   );
 }
