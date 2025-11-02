@@ -14,12 +14,12 @@ export default function App() {
 
         <View style={styles.ferramentas}>
           <TextInput style={styles.input} placeholder="Procurar tarefa..."></TextInput>
-          <Image style={styles.imagens} source={require('./assets/search.png')}/>
-          <Image style={styles.imagens} source={require('./assets/create.png')}/>
-          <Image style={styles.imagens} source={require('./assets/delete.png')}/>
+          <View style={styles.imagemBorda}><Image style={styles.imagens} source={require('./assets/search.png')}/></View>
+          <View style={styles.imagemBorda}><Image style={styles.imagens} source={require('./assets/create.png')}/></View>
+          <View style={styles.imagemBorda}><Image style={styles.imagens} source={require('./assets/delete.png')}/></View>
         </View>
 
-        <View style={{height: 1, width: 320, backgroundColor: '#D9D9D9', alignSelf: "center"}}/>
+        <View style={{height: 1, width: 350, backgroundColor: '#D9D9D9', alignSelf: "center"}}/>
 
         <View style={styles.corpoTarefa}>
             <View style={styles.tarefa}>
@@ -54,13 +54,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#4ADCF3",
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-    elevation: 8,
+    elevation: 12,
   },
   tituloLista: {
     textAlign: 'center',
     fontSize: 30,
     fontWeight: '700',
-    color: '#FFF8F1',
+    color: '#FFFFFF',
   },    
 
   //-----------------------------------Corpo---------------------------------------------//
@@ -77,22 +77,28 @@ const styles = StyleSheet.create({
   ferramentas: {
     flexDirection: 'row',
     margin: 10,
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
   input: {
     backgroundColor: '#D9D9D9',
-    height: 32,
+    height: 30,
     width: 200,
     borderRadius: 100,
+    paddingLeft: 13,
+    color: '#808080',
+  },  
+  imagemBorda: {
+    width: 35,
+    height: 35,
+    backgroundColor:'#FFFFFF',
+    borderRadius: 16,
+    alignItems: 'center',
+    justifyContent:'center',
   },  
   imagens:{
-    width: 20,
-    height: 20,
-    backgroundColor:'#FFF8F1',
-    borderRadius: 100,
-    padding: 15,
-    marginHorizontal: 3,
+    width: 25,
+    height: 25,
   },
 
 //-----------------------------------Tarefas---------------------------------------------//
@@ -105,6 +111,7 @@ completed: {
 tarefa: {
   flexDirection: 'row',
   alignItems: 'center',
+  justifyContent: 'space-between',
 
   width: 310,
   minHeight: 50,
@@ -123,26 +130,27 @@ textoTarefa: {
 },
 
 tituloTarefa: {
-  color: '#FFF8F1',
+  color: '#FFFFFF',
   fontSize: 18,
   fontWeight: '500',
 },
 
 descricaoTarefa:{
-  color: '#FFF8F1',
+  color: '#FFFFFF',
   fontSize: 12,
-  width: 140,
+  width: 130,
 },
 
 edit: {
   width: 32,
   height: 35,
+  marginRight: 10,
 },
 
 move: {
   width: 40,
   height: 40,
-  marginLeft: 20,
+  marginRight: 10,
 },
 
 })
