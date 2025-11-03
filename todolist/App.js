@@ -6,7 +6,14 @@ export default function App() {
   return (
     <View style={styles.container}>
       
+      <View style={styles.listaBar}>
+        <View style={styles.actualBar}/>
+        <View style={styles.square}></View>
+        <View style={styles.arco}/>
+      </View>
+
       <View style={styles.cabeçalho}>
+        
         <Text style={styles.tituloLista}>Tarefas Diárias</Text>  
       </View>
 
@@ -14,9 +21,11 @@ export default function App() {
 
         <View style={styles.ferramentas}>
           <TextInput style={styles.input} placeholder="Procurar tarefa..."></TextInput>
-          <View style={styles.imagemBorda}><Image style={styles.imagens} source={require('./assets/search.png')}/></View>
-          <View style={styles.imagemBorda}><Image style={styles.imagens} source={require('./assets/create.png')}/></View>
-          <View style={styles.imagemBorda}><Image style={styles.imagens} source={require('./assets/delete.png')}/></View>
+          <View style={styles.imagensContainer}>
+          <View style={styles.imagemBorda}><Image style={styles.imagens} source={require('./assets/Search.png')}/></View>
+          <View style={styles.imagemBorda}><Image style={styles.imagens} source={require('./assets/Create.png')}/></View>
+          <View style={styles.imagemBorda}><Image style={styles.imagens} source={require('./assets/Delete.png')}/></View>
+          </View>
         </View>
 
         <View style={{height: 1, width: 350, backgroundColor: '#D9D9D9', alignSelf: "center"}}/>
@@ -46,15 +55,45 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+   //-----------------------------------navbarLista---------------------------------------------//
+   listaBar: {
+    flexDirection:'row',
+    marginRight:155,
+   },
+   
+   actualBar: {
+    height: 35,
+    width: 180,
+    backgroundColor: "#4ADCF3",
+    
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+  },
+  square:{ 
+    height: 15,
+    width: 15,
+    marginTop: 20,
+    backgroundColor: "#4ADCF3",
+  },
+ 
+  arco: {
+    height: 15,
+    width: 15,
+    marginTop: 20,
+    marginLeft:180,
+    backgroundColor: '#FFFFFF',
+    borderBottomLeftRadius: 15,
+    position: 'absolute',
+  },
   //-----------------------------------Cabeçalho---------------------------------------------//
   cabeçalho: {
     justifyContent: 'center',
     width: 350,
-    height: 120,
+    height: 100,
     backgroundColor: "#4ADCF3",
-    borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     elevation: 12,
+  
   },
   tituloLista: {
     textAlign: 'center',
@@ -81,13 +120,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   input: {
+    position: 'absolute',
     backgroundColor: '#D9D9D9',
     height: 30,
-    width: 200,
+    width: 230,
     borderRadius: 100,
     paddingLeft: 13,
     color: '#808080',
   },  
+
+  imagensContainer: {
+    flexDirection: 'row',
+    marginLeft:195,
+    alignItems: 'center',
+ 
+  },
   imagemBorda: {
     width: 35,
     height: 35,
@@ -95,6 +142,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     alignItems: 'center',
     justifyContent:'center',
+    marginLeft: 10,
   },  
   imagens:{
     width: 25,
