@@ -1,7 +1,14 @@
 
-import { View,Text, StyleSheet, TextInput, Image } from "react-native";
+import { View,Text, StyleSheet, TextInput, Image, TouchableOpacity } from "react-native";
 
 export default function App() {
+    const handleSearch = () => {};
+    const handleCreate = () => {};
+    const handleDelete = () => {};
+
+    const handleCompleted = () => {};
+    const handleEdit = () => {};
+    const handleMove = () => {};
 
   return (
     <View style={styles.container}>
@@ -22,9 +29,19 @@ export default function App() {
         <View style={styles.ferramentas}>
           <TextInput style={styles.input} placeholder="Procurar tarefa..."></TextInput>
           <View style={styles.imagensContainer}>
-          <View style={styles.imagemBorda}><Image style={styles.imagens} source={require('./assets/Search.png')}/></View>
-          <View style={styles.imagemBorda}><Image style={styles.imagens} source={require('./assets/Create.png')}/></View>
-          <View style={styles.imagemBorda}><Image style={styles.imagens} source={require('./assets/Delete.png')}/></View>
+            
+          <TouchableOpacity onPress={handleSearch}>
+            <View style={styles.imagemBorda}><Image style={styles.imagens} source={require('./assets/Search.png')}/></View>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={handleCreate}>
+            <View style={styles.imagemBorda}><Image style={styles.imagens} source={require('./assets/Create.png')}/></View>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={handleDelete}>
+            <View style={styles.imagemBorda}><Image style={styles.imagens} source={require('./assets/Delete.png')}/></View>
+          </TouchableOpacity>
+
           </View>
         </View>
 
@@ -32,13 +49,19 @@ export default function App() {
 
         <View style={styles.corpoTarefa}>
             <View style={styles.tarefa}>
-              <Image style={styles.completed} source={require('./assets/completed.png')}/>
+              <TouchableOpacity onPress={handleCompleted}>
+                <Image style={styles.completed} source={require('./assets/completed.png')}/>
+              </TouchableOpacity>
               <View style={styles.textoTarefa}>
                 <Text style={styles.tituloTarefa}>Titulo da Tarefa</Text>
                 <Text style={styles.descricaoTarefa}>Passear com o cachoro no horario combinado.</Text>
               </View>
+              <TouchableOpacity onPress={handleEdit}>
               <Image style={styles.edit} source={require('./assets/edit.png')}/>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={handleMove}>
               <Image style={styles.move} source={require('./assets/move.png')}/>
+              </TouchableOpacity>
             </View>
         </View>
 
