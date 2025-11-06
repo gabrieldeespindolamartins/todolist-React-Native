@@ -1,17 +1,55 @@
 
-import { View,Text, StyleSheet, TextInput, Image, TouchableOpacity } from "react-native";
+import { View,Text, StyleSheet, TextInput, Image, TouchableOpacity, ScrollView, Modal } from "react-native";
 import styles from './src/components/styles.js'
+import { useEffect, useState } from "react";
 
 export default function App() {
+    const [editModal, setEditModal] = useState(false);
+    const [tarefas, setTarefas] = useState([]);
+
+    async function buscarTarefas() {
+      const response = await fetch('https://69037f71d0f10a340b249914.mockapi.io/tasks', {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      })
+      const data = await response.json();
+      setTarefas(data)
+      }
+
+      useEffect(() => {
+        buscarTarefas();
+      }, []);
+
+//--------------------------------------------------------------------------------------------------------//
+
+    async function atualizarStatus(item) {
+      const response = await fetch(`https://69037f71d0f10a340b249914.mockapi.io/tasks/${item.taskId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json',
+      },
+        body: JSON.stringify({
+          ...item,
+        completed: !item.completed,       
+        })
+      })
+     const data = await response.json();
+     buscarTarefas();
+    }
+
+//--------------------------------------------------------------------------------------------------------//
+
     const handleSearch = () => {};
     const handleCreate = () => {};
     const handleDelete = () => {};
 
-    const handleCompleted = () => {};
     const handleEdit = () => {};
     const handleMove = () => {};
 
   return (
+    
     <View style={styles.container}>
       
       <View style={styles.listaBar}>
@@ -48,23 +86,43 @@ export default function App() {
 
         <View style={{height: 1, width: 350, backgroundColor: '#D9D9D9', alignSelf: "center"}}/>
 
-        <View style={styles.corpoTarefa}>
-            <View style={styles.tarefa}>
-              <TouchableOpacity onPress={handleCompleted}>
+        <ScrollView style={styles.scroll}>
+          {tarefas.map((item) =>
+            <View key={item.taskId} style={styles.tarefa}>
+              <TouchableOpacity onPress={() => atualizarStatus(item)}>
+                {item.completed ? 
                 <Image style={styles.completed} source={require('./assets/completed.png')}/>
+                 :
+                <Image style={styles.completed} source={require('./assets/Pendente.png')}/>
+                }
               </TouchableOpacity>
+
               <View style={styles.textoTarefa}>
-                <Text style={styles.tituloTarefa}>Titulo da Tarefa</Text>
-                <Text style={styles.descricaoTarefa}>Passear com o cachoro no horario combinado.</Text>
+                <Text style={styles.tituloTarefa}>{item.title}</Text>
+                <Text style={styles.descricaoTarefa}>{item.description}</Text>
               </View>
-              <TouchableOpacity onPress={handleEdit}>
+
+              <Modal visible={editModal} transparent={true}>
+                  <View style={{flex:1, justifyContent:'center', alignItems:'center',}}>
+                    <View style={{justifyContent: 'center', alignItems:'center', backgroundColor: '#4ADCF3'}}>
+                   
+                      <TextInput placeholder="Titulo"></TextInput>
+                      <TouchableOpacity >Confirmar</TouchableOpacity>
+                      <TouchableOpacity >Deletar</TouchableOpacity>
+                      <TouchableOpacity onPress={() => setEditModal(false)}>Cancelar</TouchableOpacity>
+                    </View>
+                  </View>
+              </Modal>
+              <TouchableOpacity onPress={() => setEditModal(true)}>
               <Image style={styles.edit} source={require('./assets/edit.png')}/>
               </TouchableOpacity>
+
               <TouchableOpacity onPress={handleMove}>
               <Image style={styles.move} source={require('./assets/move.png')}/>
               </TouchableOpacity>
             </View>
-        </View>
+            )}
+        </ScrollView>
 
       </View>
 

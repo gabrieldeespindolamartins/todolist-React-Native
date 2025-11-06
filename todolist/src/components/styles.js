@@ -109,19 +109,22 @@ completed: {
 },
 
 tarefa: {
+  alignSelf: 'center',
   flexDirection: 'row',
   alignItems: 'center',
   justifyContent: 'space-between',
 
-  width: 310,
+  marginTop: 30,
+  width: 280,
   minHeight: 50,
   backgroundColor: "#4ADCF3",
   borderRadius: 10  ,
 },
 
-corpoTarefa: {
-  alignItems: 'center',
-  marginTop: 20,
+scroll: {
+  width: 330,
+  alignSelf: 'center',
+  maxHeight: 300,
 },
 
 textoTarefa: {
