@@ -7,6 +7,8 @@ export default function App() {
     const [editModal, setEditModal] = useState(false);
     const [tarefas, setTarefas] = useState([]);
 
+//--------------------------------------------------------------------------------------------------------//
+
     async function buscarTarefas() {
       const response = await fetch('https://69037f71d0f10a340b249914.mockapi.io/tasks', {
       method: 'GET',
@@ -103,13 +105,16 @@ export default function App() {
               </View>
 
               <Modal visible={editModal} transparent={true}>
-                  <View style={{flex:1, justifyContent:'center', alignItems:'center',}}>
-                    <View style={{justifyContent: 'center', alignItems:'center', backgroundColor: '#4ADCF3'}}>
+                  <View style={{flex:1, justifyContent:'center', alignItems:'center', }}>
+                    <View style={{justifyContent: 'center', alignItems:'center', backgroundColor: '#4ADCF3', borderRadius: 10, }}>
                    
-                      <TextInput placeholder="Titulo"></TextInput>
-                      <TouchableOpacity >Confirmar</TouchableOpacity>
-                      <TouchableOpacity >Deletar</TouchableOpacity>
-                      <TouchableOpacity onPress={() => setEditModal(false)}>Cancelar</TouchableOpacity>
+                      <TextInput placeholder="Titulo" style={styles.modalTextInput}></TextInput>
+                      <TextInput placeholder="Decrição" style={styles.modalTextInput}></TextInput>
+                        <View style={styles.modalButtonContent}> 
+                          <TouchableOpacity style={styles.modalButton}>Confirmar</TouchableOpacity>
+                          <TouchableOpacity style={styles.modalButton}>Deletar</TouchableOpacity>
+                          <TouchableOpacity onPress={() => setEditModal(false)} style={styles.modalButton}>Cancelar</TouchableOpacity>
+                        </View>
                     </View>
                   </View>
               </Modal>

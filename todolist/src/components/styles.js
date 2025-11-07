@@ -156,4 +156,25 @@ move: {
   marginRight: 10,
 },
 
+//-----------------------------------Tarefas---------------------------------------------//
+
+modalButtonContent: {
+  flexDirection: 'row',
+},
+modalTextInput: {
+  alignSelf: 'flex-start',
+  backgroundColor: '#FFFFFF',
+  borderRadius: 5,
+  marginLeft: 10,
+  margin: 5
+},
+
+modalButton: {
+  backgroundColor: '#FFFFFF',
+  margin: 10,
+  padding: 5,
+  borderRadius: 5,
+}
+
+
 })
