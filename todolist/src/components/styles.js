@@ -75,7 +75,7 @@ export default StyleSheet.create({
     position: 'absolute',
     backgroundColor: '#D9D9D9',
     height: 30,
-    width: 230,
+    width: 270,
     borderRadius: 100,
     paddingLeft: 13,
     color: '#808080',
@@ -83,7 +83,7 @@ export default StyleSheet.create({
 
   imagensContainer: {
     flexDirection: 'row',
-    marginLeft:195,
+    marginLeft:240,
     alignItems: 'center',
  
   },
@@ -150,7 +150,7 @@ edit: {
   marginRight: 10,
 },
 
-move: {
+delete: {
   width: 40,
   height: 40,
   marginRight: 10,

@@ -79,10 +79,6 @@ export default function App() {
             <View style={styles.imagemBorda}><Image style={styles.imagens} source={require('./assets/Create.png')}/></View>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={handleDelete}>
-            <View style={styles.imagemBorda}><Image style={styles.imagens} source={require('./assets/Delete.png')}/></View>
-          </TouchableOpacity>
-
           </View>
         </View>
 
@@ -112,18 +108,18 @@ export default function App() {
                       <TextInput placeholder="Decrição" style={styles.modalTextInput}></TextInput>
                         <View style={styles.modalButtonContent}> 
                           <TouchableOpacity style={styles.modalButton}>Confirmar</TouchableOpacity>
-                          <TouchableOpacity style={styles.modalButton}>Deletar</TouchableOpacity>
                           <TouchableOpacity onPress={() => setEditModal(false)} style={styles.modalButton}>Cancelar</TouchableOpacity>
                         </View>
                     </View>
                   </View>
               </Modal>
+              
               <TouchableOpacity onPress={() => setEditModal(true)}>
               <Image style={styles.edit} source={require('./assets/edit.png')}/>
               </TouchableOpacity>
 
               <TouchableOpacity onPress={handleMove}>
-              <Image style={styles.move} source={require('./assets/move.png')}/>
+              <Image style={styles.delete} source={require('./assets/delete.png')}/>
               </TouchableOpacity>
             </View>
             )}
