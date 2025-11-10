@@ -1,4 +1,4 @@
-
+//link para prototipo figma: https://www.figma.com/design/H1ECI4GMmT1UzLsLQzlvhi/Taskit?t=oGdN2JWqL3Dv3dtk-0//
 import { View,Text, StyleSheet, TextInput, Image, TouchableOpacity, ScrollView, Modal } from "react-native";
 import styles from './src/components/styles.js'
 import { useEffect, useState } from "react";
