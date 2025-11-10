@@ -4,9 +4,16 @@ import styles from './src/components/styles.js'
 import { useEffect, useState } from "react";
 
 export default function App() {
-    const [editModal, setEditModal] = useState(false);
-    const [createModal, setCreateModal] = useState(false);
     const [tarefas, setTarefas] = useState([]);
+
+    const [editModal, setEditModal] = useState(false);
+    const [tarefaEditando, setTarefaEditando] = useState(null);
+    const [editTitle, setEditTitle] = useState("");
+    const [editDesc, setEditDesc] = useState("");
+
+    const [createModal, setCreateModal] = useState(false);
+    const [newTitle, setNewTitle] = useState("");
+    const [newDesc, setNewDesc] = useState("");
 
 //-----------------------------------Get tarefas-------------------------------------//
 
@@ -25,7 +32,7 @@ export default function App() {
         buscarTarefas();
       }, []);
 
-//-------------------------------------atualizar-----------------------------------------//
+//-------------------------------------deletar-----------------------------------------//
 
     async function deletarTarefa(item) {
       const response = await fetch(`https://69037f71d0f10a340b249914.mockapi.io/tasks/${item.taskId}`, {
@@ -38,7 +45,7 @@ export default function App() {
       }
     
 
-//-----------------------------------------deletar----------------------------------------------//
+//-----------------------------------------atualizarStatus----------------------------------------------//
 
 async function atualizarStatus(item) {
   const response = await fetch(`https://69037f71d0f10a340b249914.mockapi.io/tasks/${item.taskId}`, {
@@ -51,24 +58,49 @@ async function atualizarStatus(item) {
     completed: !item.completed,       
     })
   })
- const data = await response.json();
  buscarTarefas();
 }
 
-//-------------------------------------Criar Tarefas-------------------------------------------//
+//-----------------------------------------editarTarefa----------------------------------------------//
 
-async function criarTarefa(item) {
+async function editarTarefa(item) {
   const response = await fetch(`https://69037f71d0f10a340b249914.mockapi.io/tasks/${item.taskId}`, {
   method: 'PUT',
   headers: {
     'Content-type': 'application/json',
   },
     body: JSON.stringify({
-      ...item,
-    completed: !item.completed,       
+    ...tarefaEditando, // mantém os outros campos
+    title: editTitle,
+    description: editDesc,
+    })
+  })
+
+ setEditModal(false);
+ buscarTarefas();
+}
+
+//-------------------------------------Criar Tarefas-------------------------------------------//
+
+async function criarTarefa(item) {
+  const response = await fetch(`https://69037f71d0f10a340b249914.mockapi.io/tasks`, {
+  method: 'POST', 
+  headers: {
+    'Content-type': 'application/json',
+  },
+    body: JSON.stringify({
+      title: newTitle,
+      description: newDesc,
+      completed: false,
+
     })
   })
  const data = await response.json();
+
+ setNewTitle("");
+ setNewDesc("");
+ setCreateModal(false);
+
  buscarTarefas();
 }
 
@@ -112,11 +144,16 @@ async function criarTarefa(item) {
                   <View style={{flex:1, justifyContent:'center', alignItems:'center', }}>
                     <View style={{justifyContent: 'center', alignItems:'center', backgroundColor: '#4ADCF3', borderRadius: 10, }}>
                    
-                      <TextInput placeholder="Titulo" style={styles.modalTextInput}></TextInput>
-                      <TextInput placeholder="Decrição" style={styles.modalTextInput}></TextInput>
+                      <TextInput placeholder="Titulo" style={styles.modalTextInput} value={newTitle} onChangeText={setNewTitle}></TextInput>
+                      <TextInput placeholder="Decrição" style={styles.modalTextInput} value={newDesc} onChangeText={setNewDesc}></TextInput>
                         <View style={styles.modalButtonContent}> 
-                          <TouchableOpacity style={styles.modalButton}>Criar</TouchableOpacity>
-                          <TouchableOpacity onPress={() => setCreateModal(false)} style={styles.modalButton}>Cancelar</TouchableOpacity>
+                          <TouchableOpacity onPress={criarTarefa} style={styles.modalButton}>
+                            <Text>Criar</Text> 
+                          </TouchableOpacity>
+
+                          <TouchableOpacity onPress={() => setCreateModal(false)} style={styles.modalButton}>
+                            <Text>Cancelar</Text> 
+                          </TouchableOpacity>
                         </View>
                     </View>
                   </View>
@@ -147,22 +184,26 @@ async function criarTarefa(item) {
                   <View style={{flex:1, justifyContent:'center', alignItems:'center', }}>
                     <View style={{justifyContent: 'center', alignItems:'center', backgroundColor: '#4ADCF3', borderRadius: 10, }}>
                    
-                      <TextInput placeholder="Titulo" style={styles.modalTextInput}></TextInput>
-                      <TextInput placeholder="Decrição" style={styles.modalTextInput}></TextInput>
+                      <TextInput placeholder="Titulo" style={styles.modalTextInput}  value={editTitle} onChangeText={setEditTitle}></TextInput>
+                      <TextInput placeholder="Decrição" style={styles.modalTextInput}  value={editDesc} onChangeText={setEditDesc}></TextInput>
                         <View style={styles.modalButtonContent}> 
-                          <TouchableOpacity style={styles.modalButton}>Confirmar</TouchableOpacity>
-                          <TouchableOpacity onPress={() => setEditModal(false)} style={styles.modalButton}>Cancelar</TouchableOpacity>
+                        <TouchableOpacity onPress={() => editarTarefa(tarefaEditando)} style={styles.modalButton}>
+                          <Text>Confirmar</Text> 
+                        </TouchableOpacity>
+                          <TouchableOpacity onPress={() => setEditModal(false)} style={styles.modalButton}>
+                            <Text>Cancelar</Text>
+                          </TouchableOpacity>
                         </View>
                     </View>
                   </View>
               </Modal>
         {/*----------------------------------------------------------------------------------------------------------------*/}
-              <TouchableOpacity onPress={() => setEditModal(true)}>
+              <TouchableOpacity onPress={() => {setTarefaEditando(item); setEditTitle(item.title); setEditDesc(item.description); setEditModal(true);}}>
               <Image style={styles.edit} source={require('./assets/edit.png')}/>
               </TouchableOpacity>
 
               <TouchableOpacity onPress={() => deletarTarefa(item)}>
-              <Image style={styles.delete} source={require('./assets/delete.png')}/>
+              <Image style={styles.delete} source={require('./assets/delete2.png')}/>
               </TouchableOpacity>
             </View>
             )}
