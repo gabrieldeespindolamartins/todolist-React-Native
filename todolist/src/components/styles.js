@@ -162,11 +162,12 @@ modalButtonContent: {
   flexDirection: 'row',
 },
 modalTextInput: {
+  
   alignSelf: 'flex-start',
   backgroundColor: '#FFFFFF',
   borderRadius: 5,
   marginLeft: 10,
-  margin: 5
+  margin: 5,
 },
 
 modalButton: {
@@ -174,6 +175,8 @@ modalButton: {
   margin: 10,
   padding: 5,
   borderRadius: 5,
+  minWidth: 70,
+  textAlign: 'center',
 }
 
 

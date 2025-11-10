@@ -5,9 +5,10 @@ import { useEffect, useState } from "react";
 
 export default function App() {
     const [editModal, setEditModal] = useState(false);
+    const [createModal, setCreateModal] = useState(false);
     const [tarefas, setTarefas] = useState([]);
 
-//--------------------------------------------------------------------------------------------------------//
+//-----------------------------------Get tarefas-------------------------------------//
 
     async function buscarTarefas() {
       const response = await fetch('https://69037f71d0f10a340b249914.mockapi.io/tasks', {
@@ -24,32 +25,54 @@ export default function App() {
         buscarTarefas();
       }, []);
 
-//--------------------------------------------------------------------------------------------------------//
+//-------------------------------------atualizar-----------------------------------------//
 
-    async function atualizarStatus(item) {
+    async function deletarTarefa(item) {
       const response = await fetch(`https://69037f71d0f10a340b249914.mockapi.io/tasks/${item.taskId}`, {
-      method: 'PUT',
+      method: 'DELETE',
       headers: {
-        'Content-type': 'application/json',
-      },
-        body: JSON.stringify({
-          ...item,
-        completed: !item.completed,       
-        })
-      })
-     const data = await response.json();
-     buscarTarefas();
-    }
+        'Content-type': 'application/json'},
+      });
+             
+        buscarTarefas();
+      }
+    
 
-//--------------------------------------------------------------------------------------------------------//
+//-----------------------------------------deletar----------------------------------------------//
 
-    const handleSearch = () => {};
-    const handleCreate = () => {};
-    const handleDelete = () => {};
+async function atualizarStatus(item) {
+  const response = await fetch(`https://69037f71d0f10a340b249914.mockapi.io/tasks/${item.taskId}`, {
+  method: 'PUT',
+  headers: {
+    'Content-type': 'application/json',
+  },
+    body: JSON.stringify({
+      ...item,
+    completed: !item.completed,       
+    })
+  })
+ const data = await response.json();
+ buscarTarefas();
+}
 
-    const handleEdit = () => {};
-    const handleMove = () => {};
+//-------------------------------------Criar Tarefas-------------------------------------------//
 
+async function criarTarefa(item) {
+  const response = await fetch(`https://69037f71d0f10a340b249914.mockapi.io/tasks/${item.taskId}`, {
+  method: 'PUT',
+  headers: {
+    'Content-type': 'application/json',
+  },
+    body: JSON.stringify({
+      ...item,
+    completed: !item.completed,       
+    })
+  })
+ const data = await response.json();
+ buscarTarefas();
+}
+
+//-----------------------------------cabeçalho--------------------------------------------------//
   return (
     
     <View style={styles.container}>
@@ -61,8 +84,11 @@ export default function App() {
       </View>
 
       <View style={styles.cabeçalho}>
-        
+      
         <Text style={styles.tituloLista}>Tarefas Diárias</Text>  
+
+       {/*------------------------------------------------ferramentas----------------------------------------------*/}
+
       </View>
 
       <View style={styles.corpo}>
@@ -71,18 +97,35 @@ export default function App() {
           <TextInput style={styles.input} placeholder="Procurar tarefa..."></TextInput>
           <View style={styles.imagensContainer}>
             
-          <TouchableOpacity onPress={handleSearch}>
+          <TouchableOpacity>
             <View style={styles.imagemBorda}><Image style={styles.imagens} source={require('./assets/Search.png')}/></View>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={handleCreate}>
+          <TouchableOpacity onPress={() => setCreateModal(true)}>
             <View style={styles.imagemBorda}><Image style={styles.imagens} source={require('./assets/Create.png')}/></View>
           </TouchableOpacity>
 
           </View>
         </View>
+        {/*-----------------------------------------------createModal-----------------------------------------------*/}
+        <Modal visible={createModal} transparent={true}>
+                  <View style={{flex:1, justifyContent:'center', alignItems:'center', }}>
+                    <View style={{justifyContent: 'center', alignItems:'center', backgroundColor: '#4ADCF3', borderRadius: 10, }}>
+                   
+                      <TextInput placeholder="Titulo" style={styles.modalTextInput}></TextInput>
+                      <TextInput placeholder="Decrição" style={styles.modalTextInput}></TextInput>
+                        <View style={styles.modalButtonContent}> 
+                          <TouchableOpacity style={styles.modalButton}>Criar</TouchableOpacity>
+                          <TouchableOpacity onPress={() => setCreateModal(false)} style={styles.modalButton}>Cancelar</TouchableOpacity>
+                        </View>
+                    </View>
+                  </View>
+              </Modal>
+        {/*-----------------------------------------------linha-----------------------------------------------*/}
 
         <View style={{height: 1, width: 350, backgroundColor: '#D9D9D9', alignSelf: "center"}}/>
+
+        {/*---------------------------------------------tarefas-------------------------------------------------*/}
 
         <ScrollView style={styles.scroll}>
           {tarefas.map((item) =>
@@ -99,7 +142,7 @@ export default function App() {
                 <Text style={styles.tituloTarefa}>{item.title}</Text>
                 <Text style={styles.descricaoTarefa}>{item.description}</Text>
               </View>
-
+        {/*-------------------------------------------------editmodal e delete----------------------------------------------*/}
               <Modal visible={editModal} transparent={true}>
                   <View style={{flex:1, justifyContent:'center', alignItems:'center', }}>
                     <View style={{justifyContent: 'center', alignItems:'center', backgroundColor: '#4ADCF3', borderRadius: 10, }}>
@@ -113,12 +156,12 @@ export default function App() {
                     </View>
                   </View>
               </Modal>
-              
+        {/*----------------------------------------------------------------------------------------------------------------*/}
               <TouchableOpacity onPress={() => setEditModal(true)}>
               <Image style={styles.edit} source={require('./assets/edit.png')}/>
               </TouchableOpacity>
 
-              <TouchableOpacity onPress={handleMove}>
+              <TouchableOpacity onPress={() => deletarTarefa(item)}>
               <Image style={styles.delete} source={require('./assets/delete.png')}/>
               </TouchableOpacity>
             </View>
